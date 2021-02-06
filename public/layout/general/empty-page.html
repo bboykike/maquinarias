@@ -1,0 +1,40 @@
+<script>
+async function logFetch(data) {
+  try {
+    const webhook="https://hook.integromat.com/pg63swyml4ad36kq5khwk8iylfpeau30";
+    const response = await fetch(webhook, {
+        method:'POST',
+        body: JSON.stringify({ref:data})
+    });
+    return await response;
+  }
+  catch (err) {
+    console.log('fetch failed', err);
+  }
+}
+ function getUrlRef(){
+    let urlParams = new URLSearchParams(window.location.search);
+    let ref = urlParams.get('ref');
+    document.cookie = `ref=${ref}`;
+ }
+ function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+getUrlRef();
+const serch="ref";
+let serchCookie=getCookie(serch);
+let responseFech=logFetch(serchCookie);
+console.log(responseFech);
+</script>
